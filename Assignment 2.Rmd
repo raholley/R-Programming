@@ -5,7 +5,7 @@ date: "4/30/2019"
 output: html_document
 ---
 
-1. Write a	program	to find	the	outliers using Box	and	Whisker’s	criterion	discussed	in the class.
+1. Write a program to find the	outliers using Box and	Whisker’s	criterion	discussed	in the class.
 ```{r }
 data1 <- c(22,30,35,40,40,52,58,60,65,72,250)
 summary(data1)
@@ -22,7 +22,7 @@ intersect(x,y)
 #B. Find values that are in x but not	in y and (vice versa)
 union(setdiff(x,y), setdiff(y,x))
 ```
-#C. Construct	a	vector	that	contains	all	values	contained	in	either X	or Y, and	compare	this	vector	to c(X,Y)
+#C. Construct	a	vector that	contains all values	contained	in either X	or Y, and	compare	this vector	to c(X,Y)
 ```{r}
 a <- c(intersect(x,y),setdiff(x,y),setdiff(y,x))
 a
@@ -87,7 +87,7 @@ Mean1<- mean(x)
 Sd1<-sd(x)
 return(mean	=	mean1,	sd	=	sd1)
 }
-Modify	the	function	so	that:	(a)	the default	is	to	use	rnorm to	generate	30 random	normal	numbers,	and	return	the	standard	deviation.
+Modify	the	function	so	that:	(a)	the default	is	to	use	rnorm to	generate	30 random	normal	numbers, and	return	the	standard	deviation.
 ```{r}
 Fn1 <- function(x){
   x = rnorm(30)
