@@ -1,0 +1,109 @@
+---
+title: "Assignment 2"
+author: "Ruth Holley"
+date: "4/30/2019"
+output: html_document
+---
+
+1. Write a	program	to find	the	outliers using Box	and	Whisker’s	criterion	discussed	in the class.
+```{r }
+data1 <- c(22,30,35,40,40,52,58,60,65,72,250)
+summary(data1)
+boxplot(data1)
+```
+
+2. Make	two	vectors: x <-c(1,2,5,10,12)  y <-c(2,5,1,0,12)
+```{r }
+x <-c(1,2,5,10,12)
+y <-c(2,5,1,0,12)
+
+#A. Find the	values that	are	contained	in both	X	and	Y.
+intersect(x,y)
+#B. Find values that are in x but not	in y and (vice versa)
+union(setdiff(x,y), setdiff(y,x))
+```
+#C. Construct	a	vector	that	contains	all	values	contained	in	either X	or Y, and	compare	this	vector	to c(X,Y)
+```{r}
+a <- c(intersect(x,y),setdiff(x,y),setdiff(y,x))
+a
+b <- c(x,y)
+b
+a == b
+unique(b[! b %in% a])
+```
+
+Load USArrests data	set.	
+```{r }
+data(USArrests)
+USArrests
+```
+3. Which states	has	most and least assault, murder, and rape arrests.
+```{r}
+# States with most Assault, murder, rape
+mAssault <- which(USArrests$Assault == max(USArrests$Assault))
+rownames(USArrests)[mAssault]
+
+mMurder<- which(USArrests$Murder == max(USArrests$Murder))
+rownames(USArrests)[mMurder]
+
+mRape <- which(USArrests$Rape == max(USArrests$Rape))
+rownames(USArrests)[mRape]
+```
+
+#States with the least Assault, murder, rape
+
+```{r}
+lAssault <- which(USArrests$Assault == min(USArrests$Assault))
+rownames(USArrests)[lAssault]
+
+lMurder<- which(USArrests$Murder == min(USArrests$Murder))
+rownames(USArrests)[lMurder]
+
+lRape <- which(USArrests$Rape == min(USArrests$Rape))
+rownames(USArrests)[lRape]
+```
+
+4. Which states	are	in the bottom	25%	of murder	
+```{r}
+summary(USArrests)
+#Bottom 25% of murder
+bottomMurderRt <- quantile(USArrests$Murder)[2]
+bottomMurderRt
+subset(USArrests, Murder < bottomMurderRt, select = Murder)
+```
+
+and in the top 25% of murder.
+```{r}
+#Top 25% of murder
+topMurderRt <- quantile(USArrests$Murder)[4]
+topMurderRt
+subset(USArrests, Murder > topMurderRt, select = Murder)
+```
+
+5. The following	function	calculates the	mean	and	standard	deviation	of a numeric vector
+
+Fn1<-function(x){
+Mean1<- mean(x)
+Sd1<-sd(x)
+return(mean	=	mean1,	sd	=	sd1)
+}
+Modify	the	function	so	that:	(a)	the default	is	to	use	rnorm to	generate	30 random	normal	numbers,	and	return	the	standard	deviation.
+```{r}
+Fn1 <- function(x){
+  x = rnorm(30)
+  sd1 <- sd(x)
+  return(sd = sd1)
+}
+```
+
+(b)	if	there	are	missing	values,	the	mean	and	standard	deviation	are	calculated	for	the	remaining	values.
+```{r}
+Fn2 <- function(x){
+  x = is.na(rnorm(30))
+  mean1 <- mean(x)
+  sd1 <- sd(X)
+  return(mean = mean1, sd = sd1)
+}
+```
+
+

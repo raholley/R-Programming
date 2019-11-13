@@ -1,0 +1,174 @@
+---
+title: "Assignment 4"
+author: "Ruth Holley"
+date: "5/27/2019"
+output: html_document
+---
+Load worldrecord.csv and answer the following?
+```{r }
+library(dplyr)
+
+worldrecord <- read.csv("/home/ruth/Downloads/WorldRecords.csv",header = TRUE, sep = ',')
+
+summary(worldrecord)
+str(worldrecord)
+dim(worldrecord)
+```
+1.How many different types of events (e.g.“Mens 100m”,	 “Womens	shotput” etc) are represented	in the dataset.
+
+There are 10 different events represented in the dataset.
+```{r }
+table(worldrecord$Event)
+```
+
+2. In what year did Usain Bolt first break the	world	record	for	the	Men’s	100m?
+2008
+```{r}
+#select(worldrecord$Athlete =="Usain Bolt")
+ filter(worldrecord,Athlete =="Usain Bolt", Event=="Mens 100m",Record < 9.74)
+```
+
+3. Which variable tells us the record	setting	time or	distance?	The	variable name	in the data	set	is?	What type	of	the	variable is	this?
+
+Record and it is a numeric
+```{r}
+#Record
+class(worldrecord$Record)
+```
+4.Create a subset of	the	dataset	that contains only the	world	record cases for men’s shotput and women’s shotput
+```{r}
+filter(worldrecord,Event %in% c("Mens Shotput", "Womens Shotput"))
+```
+
+5. Create	a	scatter plot of the	year and record shotput	distance one for men and one for women.
+```{r}
+#For Men
+#Subset the data
+menshot <- worldrecord[worldrecord$Event=='Mens Shotput', ]
+
+plot(menshot$Year,menshot$Record,main='Mens Shotput World Records',xlab='Year',ylab='Record Shotput Distance')
+```
+
+```{r}
+#For Women
+#Subset the data
+womenshot <- worldrecord[worldrecord$Event=='Womens Shotput', ] 
+
+plot(womenshot$Year,womenshot$Record,main='Womens Shotput World Records',xlab='Year',ylab='Record Shotput Distance')
+```
+
+6. Find the average/mean time	for each event.	How many	 athletes have time more than average in	each event.
+
+#Step 1: Find the average/mean time for each event
+```{r}
+worldrecord%>%
+select(Event,Type,Record,Athlete)%>%
+group_by(Event)%>%
+filter(Type =="time")%>%
+summarize(average=mean(Record))
+```
+
+#Step 2: How many	athletes have time more than average in	each event. 
+```{r}
+b1<-worldrecord%>%
+  select(Event,Type,Record,Athlete)%>%
+  group_by(Event)%>%
+  filter(Event == "Mens 100m" & Record >= 9.848824)%>%
+  summarise(Gt_Than_Avg=n())
+b1
+#There are 9 athletes that have time greather than the average for this event
+```
+
+#There are 10 athletes that have time greather than the average for this event(b2)
+```{r}
+b2<-worldrecord%>%
+  select(Event,Type,Record,Athlete)%>%
+  group_by(Event)%>%
+  filter(Event == "Mens 800m" & Record >= 105.345833)%>%
+  summarise(Gt_Than_Avg=n())
+b2
+```
+
+#There are 15 athletes that have time greather than the average for this event(b3)
+```{r}
+b3<-worldrecord%>%
+  select(Event,Type,Record,Athlete)%>%
+  group_by(Event)%>%
+  filter(Event == "Mens Mile" & Record >= 237.493750)%>%
+  summarise(Gt_Than_Avg=n())
+b3
+```
+
+#There are 6 athletes that have time greather than the average for this event(b4)
+```{r}
+b4<-worldrecord%>%
+  select(Event,Type,Record,Athlete)%>%
+  group_by(Event)%>%
+  filter(Event == "Womens 100m" & Record >= 10.880000)%>%
+  summarise(Gt_Than_Avg=n())
+b4
+```
+
+#There are 13 athletes that have time greather than the average for this event(b5)
+```{r}
+b5<-worldrecord%>%
+  select(Event,Type,Record,Athlete)%>%
+  group_by(Event)%>%
+  filter(Event == "Womens 800m" & Record >= 127.851724)%>%
+  summarise(Gt_Than_Avg=n())
+b5
+```
+#There are 5 athletes that have time greather than the average for this event(b6)
+```{r}
+b6<-worldrecord%>%
+  select(Event,Type,Record,Athlete)%>%
+  group_by(Event)%>%
+  filter(Event == "Womens Mile" & Record >= 263.653846)%>%
+  summarise(Gt_Than_Avg=n())
+b6
+```
+
+7. Select	the	athlete	who	took most	time in men’s	100m and women’s event.
+#Bob Hayes took the most time in Mens 100m with a record time of 10.06
+```{r}
+#Mens
+worldrecord%>%
+  select(Event,Type,Record,Athlete)%>%
+  filter(Event == "Mens 100m")
+```
+#Womens
+There is a tie on who took the most time in the timed
+women's events. Wyomia Tyus and Renate Stecher both have time of 11.07
+```{r}
+worldrecord%>%
+  select(Event,Type,Record,Athlete)%>%
+  filter(Event %in% c("Womens 100m", "Womens 100m", "Womens Mile"))
+```
+
+8. Which country won maximum times of	men’s 100m event?
+The United States with 11 wins.
+```{r}
+worldrecord%>%
+  select(Event,Record,Nationality,Athlete)%>%
+group_by(Nationality)%>%
+filter(Event == "Mens 100m")%>%
+summarise(Country_wins=n())
+```
+
+9. How many athletes are there in	each event?
+```{r}
+worldrecord%>%
+  select(Event,Athlete)%>%
+  group_by(Event)%>%
+summarise(Total_Athlete=n_distinct(Athlete))
+```
+
+10. Which	country	has	maximum	wins?
+#URS has maximum wins with a total of 49
+```{r}
+worldrecord%>%
+  select(Event,Record,Nationality,Athlete,Year)%>%
+  group_by(Nationality)%>%
+summarise(max_wins=n())
+```
+
