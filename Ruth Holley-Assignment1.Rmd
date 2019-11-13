@@ -1,0 +1,121 @@
+---
+title: "Assignment 1"
+author: "Ruth Holley"
+date: "4/26/2019"
+output: html_document
+---
+
+1. What are the measures of central tendency and	variation	of data?	
+
+A) Measures of central tendency tell us what is common, average, or typical about our variable. The measures of central tendency are the mode, the median, and the mean. 
+-Mode: The value (score) that occurs most often in a data set.
+-Median: the point (score) which divides the data set in ½ : e.g. ½ of
+the subjects are above the median and ½ are below the median.
+-Mean: the arithmetic average: Directly considers every score in a
+distribution. 
+
+B) Variation of Data-Measures of Variability (Dispersion). Allow us to summarize our data set with a single value. Central Tendency + Variability = a more accurate picture
+of our data set.
+-The 3 main measures of variability are Range, Variance, and Standard Deviation.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+2. What	are	the	different	ways to	create a	vector in	R?
+
+```{r }
+numeric_vector <-c(1,2,3,4,5)	
+character_vector <- c("a", "b", "c")
+boolean_vector <- c(TRUE,FALSE,TRUE)
+A <- c(C1=100,C2=101,C3=102)
+A
+B <- 1:10
+B
+C <- seq(1,10,by=0.5)
+C
+
+```
+
+ 3. Create the	following	vector and	check	the	class 
+ (‘x’,’x’,‘x’,1,3,5,7,9,2,4,6,8,10)
+```{r }
+a <-c('x','x','x',1,3,5,7,9,2,4,6,8,10)
+a
+class(a)
+```
+
+4. Create	a	vector of	positive odd integers	less than	100
+```{r}
+x <- 1:100
+x <- x[x %% 2 != 0]
+x
+```
+
+5. Remove	the values	greater than 60	and less than 80
+```{r}
+x1 <- x[ x > 60 & x < 80 ]
+x1
+#Remove the values of x1 from X
+x <- x[ x != x1 ]
+x
+#rm(x1)
+```
+
+6. Write a function	 to	return	standard	deviation, mean, and	median	of	the	vector	from Question	5.
+
+```{r}
+meanMedianStdDev <- function(x2){
+  c(Mean=mean(x2), Median=median(x2), Standard_Deviation=sd(x2))
+}
+meanMedianStdDev(x)
+```
+
+
+7. Create	two	matrices from	the	 given	 set	 of	numbers} in X1 ={2,3,7,1,6,2,3,5,1}	and	 x2	 = {3,2,9,0,7,8,5,8,2}
+```{r}
+x1= matrix(c(2,3,7,1,6,2,3,5,1), byrow = TRUE, nrow = 3)
+x1
+x2= matrix(c(3,2,9,0,7,8,5,8,2), byrow = TRUE, nrow = 3)
+x2
+```
+8. Find	the	matrix product
+```{r}
+x1 * x2
+
+```
+9. Find	the	class	of ‘iris’	dataframe,	find the class	of	all	the	columns	of	‘iris’	get	the	summary.	Get	rownames,	get	column	names.	Get	the	number of	rows	and	number	of	columns.	
+```{r}
+iris
+class(iris)
+str(iris)
+summary(iris)
+colnames(iris)
+rownames(iris)
+nrow(iris) 
+ncol(iris)
+dim(iris) 
+
+# Class for each column of iris
+paste( "class for colnames:" 
+       ,class(iris$Sepal.Length)
+       ,class(iris$Sepal.Width)
+       ,class(iris$Petal.Length)
+       ,class(iris$Petal.Width)
+       ,class(iris$Species))
+
+```
+
+10. Get	 the	 last two	 rows	 in	 the	 last	 2	 columns	
+from	iris	dataset.
+```{r}
+#tail(iris)
+iris[149:150,4:5]
+```
+
+
+
+
+
+
+
